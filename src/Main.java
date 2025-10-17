@@ -7,33 +7,58 @@ public class Main {
     public static void main(String[] args) {
         List<String> names = new newDeck().name();
         List<Integer> deck = new newDeck().newDeck();
-        System.out.println(names);
-        System.out.println(deck);
         List<Integer> playerHand = new ArrayList<>();
         List<Integer> dealerHand = new ArrayList<>();
+        List<String> playerHandNames = new ArrayList<>();
+        List<String> dealerHandNames = new ArrayList<>();
         int card = returnCard(deck.size());
         dealerHand.add(deck.get(card));
+        dealerHandNames.add(names.get(card));
         deck.remove(card);
+        names.remove(card);
         card = returnCard(deck.size());
         playerHand.add(deck.get(card));
+        playerHandNames.add(names.get(card));
         deck.remove(card);
+        names.remove(card);
         card = returnCard(deck.size());
         dealerHand.add(deck.get(card));
+        dealerHandNames.add(names.get(card));
         deck.remove(card);
+        names.remove(card);
         card = returnCard(deck.size());
         playerHand.add(deck.get(card));
+        playerHandNames.add(names.get(card));
         deck.remove(card);
-        System.out.println("Your cards are, " + playerHand.get(0) + " and " + playerHand.get(1));
-        System.out.println("The dealers cards are " + dealerHand.get(0) + " and a mystery card!");
+        names.remove(card);
+        System.out.println("Your cards are " + playerHandNames.get(0) + " and " + playerHandNames.get(1));
+        System.out.println("The dealers cards are " + dealerHandNames.get(0) + " and a face down card!");
         System.out.println("Your total is " + total(playerHand));
+        playerHand = aceChecker(playerHand);
+        dealerHand = aceChecker((dealerHand));
+        Scanner scanner = new Scanner(System.in);
+        while (bust(total(playerHand)) == false) {
+            System.out.println("Would you like to hit or stand?");
+            String hitOrStand = scanner.nextLine();
+            if (hitOrStand.equals("hit") || hitOrStand.equals("Hit")) {
+                card = returnCard(deck.size());
+                playerHand.add(deck.get(card));
+                playerHandNames.add(names.get(card));
+                deck.remove(card);
+                names.remove(card);
+            }
+        }
+
+
+
 
 
     }
     public static int returnCard(int decksize) {
         Random rng = new Random();
         int min = 0;
-        int max = decksize;
-        return(rng.nextInt((max-(min)) + 1) + min);
+        int max = decksize - 1;
+        return(rng.nextInt((max-min) + 1) + min);
 
     }
 
