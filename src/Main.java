@@ -46,6 +46,38 @@ public class Main {
                 playerHandNames.add(names.get(card));
                 deck.remove(card);
                 names.remove(card);
+                System.out.println("You pulled " + playerHandNames.get(playerHandNames.size() - 1));
+                System.out.println("Your total is " + total(playerHand));
+                if (bust(total(playerHand))) {
+                    System.out.println("You busted!");
+                }
+            }
+            else {
+                while (bust(total(dealerHand)) == false) {
+                    if (total(dealerHand) < 17) {
+                        card = returnCard(deck.size());
+                        dealerHand.add(deck.get(card));
+                        dealerHandNames.add(names.get(card));
+                        deck.remove(card);
+                        names.remove(card);
+                        System.out.println("The dealer pulled " + dealerHandNames.get(dealerHandNames.size() - 1));
+                        System.out.println("The dealer's total is " + total(dealerHand));
+                    }
+                    else {
+                        if (bust(total(dealerHand)) == false) {
+                            if (total(playerHand) > (total(dealerHand)))
+                                System.out.println("You win!");
+                            if (total(dealerHand) > (total(playerHand))) {
+                                System.out.println("Dealer wins!");
+                            }
+                            if (total(playerHand) == total(dealerHand)) {
+                                System.out.println("Tie!");
+                            }
+                            dealerHand.add(22);
+                        }
+                    }
+                }
+
             }
         }
 
