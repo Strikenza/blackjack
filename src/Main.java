@@ -2,16 +2,16 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
+        int card;
         List<String> names = new newDeck().name();
         List<Integer> deck = new newDeck().newDeck();
         List<Integer> playerHand = new ArrayList<>();
         List<Integer> dealerHand = new ArrayList<>();
         List<String> playerHandNames = new ArrayList<>();
         List<String> dealerHandNames = new ArrayList<>();
-        int card = returnCard(deck.size());
+        card = returnCard(deck.size());
         dealerHand.add(deck.get(card));
         dealerHandNames.add(names.get(card));
         deck.remove(card);
@@ -49,10 +49,11 @@ public class Main {
                 System.out.println("You pulled " + playerHandNames.get(playerHandNames.size() - 1));
                 System.out.println("Your total is " + total(playerHand));
                 if (bust(total(playerHand))) {
-                    System.out.println("You busted!");
+                    System.out.println("You busted with a " + total(playerHand) + ". You lose!");
                 }
             }
             else {
+                System.out.println("Dealer's face down card was " + dealerHandNames.get(1) + " and as such has a total of " + total(dealerHand));
                 while (bust(total(dealerHand)) == false) {
                     if (total(dealerHand) < 17) {
                         card = returnCard(deck.size());
@@ -62,21 +63,28 @@ public class Main {
                         names.remove(card);
                         System.out.println("The dealer pulled " + dealerHandNames.get(dealerHandNames.size() - 1));
                         System.out.println("The dealer's total is " + total(dealerHand));
+                        if (bust(total(dealerHand))) {
+                            System.out.println("Dealer busts with a " + total(dealerHand) + ". You win!");
+                        }
                     }
                     else {
                         if (bust(total(dealerHand)) == false) {
                             if (total(playerHand) > (total(dealerHand)))
-                                System.out.println("You win!");
+                                System.out.println("You win with a " + total(playerHand) + "!");
                             if (total(dealerHand) > (total(playerHand))) {
-                                System.out.println("Dealer wins!");
+                                System.out.println("Dealer wins with a " + total(dealerHand) + "!");
                             }
                             if (total(playerHand) == total(dealerHand)) {
-                                System.out.println("Tie!");
+                                System.out.println("You tie! You and dealer have the same total of " + total(playerHand) + "!");
                             }
-                            dealerHand.add(22);
                         }
+                        if (bust(total(dealerHand))) {
+                            System.out.println("Dealer busts with a " + total(dealerHand) + ". You win!");
+                        }
+                        dealerHand.add(22);
                     }
                 }
+
 
             }
         }
