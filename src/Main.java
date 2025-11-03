@@ -11,9 +11,15 @@ public class Main {
         boolean reset;
         while (1==1) {
             System.out.println("--------------------");
+            System.out.println("You have $" + money + "!");
             Scanner scanner = new Scanner(System.in);
             System.out.println("How much would you like to bet?");
             int bet = scanner.nextInt();
+            while (bet > money) {
+                System.out.println("You don't have enough! Try again!");
+                bet = scanner.nextInt();
+            }
+            money -= bet;
             System.out.println("You bet $" + bet + "!");
             reset = false;
             List<Integer> playerHand = new ArrayList<>();
@@ -97,7 +103,11 @@ public class Main {
                                 System.out.println("The dealer's total is " + total(dealerHand));
                                 Thread.sleep(1000);
                                 if (bust(total(dealerHand))) {
-                                    System.out.println("Dealer busts with a " + total(dealerHand) + ". You win!");
+                                    System.out.println("Dealer busts with a " + total(dealerHand));
+                                    Thread.sleep(1000);
+                                    System.out.println("You won $" + 2*bet + "!");
+                                    money += bet;
+                                    // im here
                                     Thread.sleep(3000);
                                     break;
                                 }
@@ -105,6 +115,8 @@ public class Main {
                                 if (!bust(total(dealerHand))) {
                                     if (total(playerHand) > (total(dealerHand))) {
                                         System.out.println("You win with a " + total(playerHand) + "!");
+                                        Thread.sleep(1000);
+                                        System.out.println("You won $" + 2*bet + "!");
                                         Thread.sleep(3000);
                                         break;
                                     }
@@ -120,7 +132,9 @@ public class Main {
                                     }
                                 }
                                 if (bust(total(dealerHand))) {
-                                    System.out.println("Dealer busts with a " + total(dealerHand) + ". You win!");
+                                    System.out.println("Dealer busts with a " + total(dealerHand));
+                                    Thread.sleep(1000);
+                                    System.out.println("You won $" + 2*bet + "!");
                                     Thread.sleep(3000);
                                     break;
                                 }
