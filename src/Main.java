@@ -61,9 +61,7 @@ public class Main {
             dealerHand = aceChecker((dealerHand));
             Scanner scanner1 = new Scanner(System.in);
             while (bust(total(playerHand)) == false) {
-                if (reset) {
-                    break;
-                }
+                if (reset) break;
                 else {
                     System.out.println("Would you like to hit or stand?");
                     String hitOrStand = scanner1.nextLine();
@@ -89,6 +87,7 @@ public class Main {
                         Thread.sleep(1000);
                         System.out.println("Dealer's face down card was " + dealerHandNames.get(1) + " and as such has a total of " + total(dealerHand));
                         while (bust(total(dealerHand)) == false) {
+                            if (reset) break;
                             if (total(dealerHand) < 17) {
                                 deck = resetCheckDeck(deck);
                                 names = resetCheckNames(names);
@@ -106,10 +105,8 @@ public class Main {
                                     System.out.println("Dealer busts with a " + total(dealerHand));
                                     Thread.sleep(1000);
                                     System.out.println("You won $" + 2*bet + "!");
-                                    money += bet;
-                                    // im here
+                                    money += 2*bet;
                                     Thread.sleep(3000);
-                                    break;
                                 }
                             } else {
                                 if (!bust(total(dealerHand))) {
@@ -117,27 +114,28 @@ public class Main {
                                         System.out.println("You win with a " + total(playerHand) + "!");
                                         Thread.sleep(1000);
                                         System.out.println("You won $" + 2*bet + "!");
+                                        money += 2*bet;
                                         Thread.sleep(3000);
-                                        break;
                                     }
                                     if (total(dealerHand) > (total(playerHand))) {
                                         System.out.println("Dealer wins with a " + total(dealerHand) + "!");
                                         Thread.sleep(3000);
-                                        break;
                                     }
                                     if (total(playerHand) == total(dealerHand)) {
                                         System.out.println("You tie! You and dealer have the same total of " + total(playerHand) + "!");
+                                        Thread.sleep((1000));
+                                        System.out.println("You were refunded $" + bet + "!");
                                         Thread.sleep(3000);
-                                        break;
                                     }
                                 }
                                 if (bust(total(dealerHand))) {
                                     System.out.println("Dealer busts with a " + total(dealerHand));
                                     Thread.sleep(1000);
                                     System.out.println("You won $" + 2*bet + "!");
+                                    money += 2 *bet;
                                     Thread.sleep(3000);
-                                    break;
                                 }
+                                reset = true;
                             }
                         }
                         reset = true;
@@ -147,9 +145,6 @@ public class Main {
                 }
             }
         }
-
-
-
 
 
     }
