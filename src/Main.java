@@ -6,18 +6,27 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         int card;
         int money = 1000;
+        String splitCard = "";
+        int splitCardValue;
+        boolean splitThisTurn = false;
         List<Integer> deck = new newDeck().newDeck();
         List<String> names = new newDeck().name();
         boolean reset;
-        while (1==1) {
+        while (money > 0) {
             System.out.println("--------------------");
             System.out.println("You have $" + money + "!");
             Scanner scanner = new Scanner(System.in);
             System.out.println("How much would you like to bet?");
             int bet = scanner.nextInt();
-            while (bet > money) {
-                System.out.println("You don't have enough! Try again!");
-                bet = scanner.nextInt();
+            while (bet > money || bet < 1) {
+                while (bet > money) {
+                    System.out.println("You don't have enough! Try again!");
+                    bet = scanner.nextInt();
+                }
+                while (bet < 1) {
+                    System.out.println("You must bet at least a full dollar!");
+                    bet = scanner.nextInt();
+                }
             }
             money -= bet;
             System.out.println("You bet $" + bet + "!");
@@ -63,7 +72,18 @@ public class Main {
             while (bust(total(playerHand)) == false) {
                 if (reset) break;
                 else {
-                    System.out.println("Would you like to hit or stand?");
+                    if (bet >= 2*money && playerHandNames.get(0) == playerHandNames.get(1) && playerHandNames.size() == 2) {
+                        System.out.println("Would you like to hit, stand, split, or double down?");
+                        String hitOrStand = scanner1.nextLine();
+                    }
+                    else if (bet >= 2*money) {
+                        System.out.println("Would you like to hit, stand, or double down?");
+                        String hitOrStand = scanner1.nextLine();
+                    }
+                    else {
+                        System.out.println("Would you like to hit or stand?");
+                    }
+
                     String hitOrStand = scanner1.nextLine();
                     if (hitOrStand.equals("hit") || hitOrStand.equals("Hit")) {
                         deck = resetCheckDeck(deck);
@@ -83,6 +103,26 @@ public class Main {
                             Thread.sleep(3000);
                             break;
                         }
+                    if (hitOrStand.equals("split") || splitThisTurn) {
+                        deck.clear();
+                        names.clear();
+                        if (playerHandNames.get(0) == playerHandNames.get(1) && playerHandNames.size() == 2) {
+                            splitCard = playerHandNames.get(0);
+                            splitCardValue = playerHand.get(0);
+                            deck = resetCheckDeck(deck);
+                            names = resetCheckNames(names);
+                            card = returnCard(deck.size());
+                            playerHand.remove(1);
+                            playerHandNames.remove(1);
+                            playerHand.add(deck.get(card));
+                            playerHandNames.add(names.get(card));
+                            deck.remove(card);
+                            names.remove(card);
+                            System.out.println("You've successfully split your hand into two decks that both have " + splitCard);
+                            System.out.println("You pulled " + playerHandNames.get(1) + " as your second card!");
+                        }
+                        else System.out.println("You cannot split!");
+                    }
                     } else {
                         Thread.sleep(1000);
                         System.out.println("Dealer's face down card was " + dealerHandNames.get(1) + " and as such has a total of " + total(dealerHand));
@@ -125,6 +165,7 @@ public class Main {
                                         System.out.println("You tie! You and dealer have the same total of " + total(playerHand) + "!");
                                         Thread.sleep((1000));
                                         System.out.println("You were refunded $" + bet + "!");
+                                        money += bet;
                                         Thread.sleep(3000);
                                     }
                                 }
@@ -145,6 +186,8 @@ public class Main {
                 }
             }
         }
+        System.out.println("You ran out of money!");
+        System.exit(0);
 
 
     }
