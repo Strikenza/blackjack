@@ -72,15 +72,7 @@ public class Main {
             while (bust(total(playerHand)) == false) {
                 if (reset) break;
                 else {
-                    if (bet >= 2*money && playerHandNames.get(0) == playerHandNames.get(1) && playerHandNames.size() == 2) {
-                        System.out.println("Would you like to hit, stand, split, or double down?");
-                        String hitOrStand = scanner1.nextLine();
-                    }
-                    else if (bet >= 2*money) {
-                        System.out.println("Would you like to hit, stand, or double down?");
-                        String hitOrStand = scanner1.nextLine();
-                    }
-                    else {
+                    {
                         System.out.println("Would you like to hit or stand?");
                     }
 
@@ -103,26 +95,6 @@ public class Main {
                             Thread.sleep(3000);
                             break;
                         }
-                    if (hitOrStand.equals("split") || splitThisTurn) {
-                        deck.clear();
-                        names.clear();
-                        if (playerHandNames.get(0) == playerHandNames.get(1) && playerHandNames.size() == 2) {
-                            splitCard = playerHandNames.get(0);
-                            splitCardValue = playerHand.get(0);
-                            deck = resetCheckDeck(deck);
-                            names = resetCheckNames(names);
-                            card = returnCard(deck.size());
-                            playerHand.remove(1);
-                            playerHandNames.remove(1);
-                            playerHand.add(deck.get(card));
-                            playerHandNames.add(names.get(card));
-                            deck.remove(card);
-                            names.remove(card);
-                            System.out.println("You've successfully split your hand into two decks that both have " + splitCard);
-                            System.out.println("You pulled " + playerHandNames.get(1) + " as your second card!");
-                        }
-                        else System.out.println("You cannot split!");
-                    }
                     } else {
                         Thread.sleep(1000);
                         System.out.println("Dealer's face down card was " + dealerHandNames.get(1) + " and as such has a total of " + total(dealerHand));
